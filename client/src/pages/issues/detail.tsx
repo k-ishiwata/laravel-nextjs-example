@@ -4,13 +4,14 @@ import Layout from '@/components/Layout'
 import { useIssue } from '@/hooks/issue'
 import { Button, Space, Table, LoadingOverlay } from '@mantine/core'
 import dayjs from 'dayjs'
-import Link from "next/link"
+import Link from 'next/link'
+import { getUrlParam } from '@/libs/libs'
 import { status } from '@/const'
 
 const IssueDetailPage: NextPage = () => {
     const router = useRouter()
     const { getItem } = useIssue()
-    const { data: issue, error} = getItem(Number(router.query.id))
+    const { data: issue, error} = getItem(Number(getUrlParam('id')))
 
     if (error) return <div>エラーが発生しました</div>
     if (!issue) return <LoadingOverlay visible={true} />
