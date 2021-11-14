@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import useSWR, { useSWRConfig } from 'swr'
-import axios from '@/libs/axios'
+import axios, { validateErrorNotice } from '@/libs/axios'
 import { Issue, IssuePager, IssueCreate } from '@/types/Issue'
 import { useNotifications } from '@mantine/notifications'
 
@@ -70,11 +70,7 @@ export const useIssue = () => {
                 })
             })
             .catch(error => {
-                notifications.showNotification({
-                    title: '更新に失敗しました',
-                    message: error.message,
-                    color: 'red'
-                })
+                validateErrorNotice(notifications, error, '更新に失敗しました')
             })
     }
 
@@ -111,11 +107,7 @@ export const useIssue = () => {
                 router.replace('/issues/')
             })
             .catch(error => {
-                notifications.showNotification({
-                    title: '登録に失敗しました',
-                    message: error.message,
-                    color: 'red'
-                })
+                validateErrorNotice(notifications, error, '登録に失敗しました')
             })
     }
 

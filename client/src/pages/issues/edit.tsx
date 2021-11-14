@@ -11,11 +11,6 @@ const IssueEditPage: NextPage = () => {
     const { updateAction, deleteAction, getItem } = useIssue()
     const { data: issue, error } = getItem(Number(getUrlParam('id')))
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (issue) updateAction(issue)
-    }
-
     const handleDelete = () => {
         const result = window.confirm("本当に削除しますか？")
         if (!result) return
@@ -31,7 +26,7 @@ const IssueEditPage: NextPage = () => {
             <div style={{textAlign: "right", marginTop: -50}}>
                 <Button color="red" onClick={handleDelete}>削除</Button>
             </div>
-            <IssueForm handleSubmit={handleSubmit} issue={issue}>
+            <IssueForm submitAction={updateAction} issue={issue}>
                 <Table>
                     <tbody>
                     <tr>

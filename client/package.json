@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.0",
     "@mantine/core": "^3.1.0",
     "@mantine/hooks": "^3.1.0",
     "@mantine/notifications": "^3.1.0",
@@ -17,6 +18,7 @@
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.19.1",
     "swr": "^1.0.1"
   },
   "devDependencies": {

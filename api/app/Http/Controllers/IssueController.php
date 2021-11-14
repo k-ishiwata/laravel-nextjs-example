@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
-use Illuminate\Http\Request;
+use App\Http\Requests\IssueRequest;
 
 class IssueController extends Controller
 {
@@ -20,10 +20,10 @@ class IssueController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param IssueRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(IssueRequest $request)
     {
         $issue = Issue::create($request->all());
         return $issue
@@ -41,11 +41,11 @@ class IssueController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param IssueRequest $request
      * @param Issue $issue
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Issue $issue)
+    public function update(IssueRequest $request, Issue $issue)
     {
         return $issue->update($request->all())
             ? response()->json($issue)

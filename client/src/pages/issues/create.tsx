@@ -13,14 +13,9 @@ const IssueCreatePage: NextPage = () => {
         status: 1
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        createAction(issue)
-    }
-
     return (
         <Layout title="新規登録">
-            <IssueForm handleSubmit={handleSubmit} issue={issue} />
+            <IssueForm submitAction={createAction} issue={issue} />
         </Layout>
     )
 }

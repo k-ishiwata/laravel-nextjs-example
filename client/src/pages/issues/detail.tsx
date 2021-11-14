@@ -30,7 +30,7 @@ const IssueDetailPage: NextPage = () => {
                     </tr>
                     <tr>
                         <td>内容</td>
-                        <td>{issue.body}</td>
+                        <td style={{whiteSpace: 'pre-wrap'}}>{issue.body}</td>
                     </tr>
                     <tr>
                         <td>状態</td>

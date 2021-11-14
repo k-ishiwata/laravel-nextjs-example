@@ -3,21 +3,28 @@ import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
 import { InputWrapper, Input, Textarea, Button, Space, Select } from '@mantine/core'
 import { status } from '@/const'
+import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 
 type Props = {
-    handleSubmit: React.FormEventHandler<HTMLFormElement>,
     issue: Issue|IssueCreate,
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    submitAction: (issue: Issue) => Promise<void>
 }
 
 const IssueForm: React.VFC<Props> = ({
     issue,
-    handleSubmit,
+    submitAction,
     children
 }) => {
     const router = useRouter()
+    const { register, handleSubmit, formState: { errors }, control } = useForm<Issue>()
 
-    // セレクトボックス用の配列を作る
+    const onSubmit: SubmitHandler<Issue> = data => {
+        const updateData: Issue = {...issue, ...data}
+        return submitAction(updateData)
+    }
+
+    // 状態セレクト用の配列を作る
     const selectStatus = status.slice(1).map(item => {
         return {
             value: String(item.value),
@@ -25,17 +32,31 @@ const IssueForm: React.VFC<Props> = ({
         }
     })
 
+    // 状態セレクトのバリデーションパターン
+    const validateStatusReg = new RegExp(
+        selectStatus.reduce((prev, current, index) => {
+            return prev += (index === 0 ? '' : '|') + current.value
+        }, '')
+    )
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <InputWrapper
                 id="input-title"
                 required
                 label="タイトル"
+                error={errors.title?.message}
             >
                 <Input
-                    id="input-title"
                     defaultValue={issue.title}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => issue.title = e.target.value}
+                    {...register('title', {
+                        required: "必ず入力してください。",
+                        maxLength: {
+                            value: 255,
+                            message: "255文字以内で入力してください。"
+                        }
+                    })}
+                    invalid={errors.title !== undefined}
                 />
             </InputWrapper>
             <Space />
@@ -44,16 +65,38 @@ const IssueForm: React.VFC<Props> = ({
                 required
                 minRows={6}
                 defaultValue={issue.body}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => issue.body = e.target.value}
+                {...register('body', {
+                    maxLength: {
+                        value: 1000,
+                        message: "1000文字以内で入力してください。"
+                    }
+                })}
+                error={errors.body?.message}
             />
             <Space />
-            <Select
-                label="状態"
-                required
-                data={selectStatus}
-                defaultValue={String(issue.status)}
-                onChange={(e) => issue.status = Number(e)}
-            />
+            <Controller
+                name="status"
+                control={control}
+                rules={{
+                    required: "必須です",
+                    pattern: {
+                        value: validateStatusReg,
+                        message: "項目から選択してください。"
+                    }
+                }}
+                defaultValue={issue.status}
+                render={({ field: {ref, onChange} }) => (
+                    <Select
+                        ref={ref}
+                        onChange={onChange}
+                        label="状態"
+                        required
+                        data={selectStatus}
+                        defaultValue={String(issue.status)}
+                        error={errors.status?.message}
+                    />
+                )}
+             />
             <Space />
             { children }
             <Button type="submit">保存</Button>
