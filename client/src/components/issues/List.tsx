@@ -51,16 +51,16 @@ const IssueList = () => {
                 {
                     issues.data.map(issue => (
                         <tr key={issue.id}>
-                            <td>
+                            <td width={50}>
                                 <Link href={{
                                     pathname: '/issues/detail/',
                                     query: { id: issue.id },
                                 }}>
-                                    <a>{('0000' + issue.id).slice(-4)}</a>
+                                    <a>{('00000' + issue.id).slice(-5)}</a>
                                 </Link>
                             </td>
                             <td>{issue.title}</td>
-                            <td><Badge fullWidth variant="filled" color={status[issue.status].color}>
+                            <td width={80}><Badge fullWidth variant="filled" color={status[issue.status].color}>
                                 {status[issue.status].label}
                             </Badge></td>
                             <td width={80}>{dayjs(issue.updated_at).format('YYYY/MM/DD')}</td>

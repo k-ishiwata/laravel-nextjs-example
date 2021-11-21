@@ -4,7 +4,7 @@ import axios, { validateErrorNotice } from '@/libs/axios'
 import { Issue, IssuePager, IssueCreate } from '@/types/Issue'
 import { useNotifications } from '@mantine/notifications'
 
-const APIURL = 'issues'
+const APIURL = '/api/issues'
 
 export const useIssues = (pageIndex: number = 1) => {
     const api = `${APIURL}?page=${pageIndex}`

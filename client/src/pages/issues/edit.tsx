@@ -17,30 +17,38 @@ const IssueEditPage: NextPage = () => {
         if (issue) deleteAction(issue)
     }
 
-    if (error) return <div>エラーが発生しました</div>
-    if (!issue) return <LoadingOverlay visible={true} />
+    const Content = () => {
+        if (error) return <div>エラーが発生しました</div>
+        if (!issue) return <LoadingOverlay visible={true} />
+        return (
+            <>
+                <p>ID: {issue.id}</p>
+                <Space />
+                <div style={{textAlign: "right", marginTop: -50}}>
+                    <Button color="red" onClick={handleDelete}>削除</Button>
+                </div>
+                <IssueForm submitAction={updateAction} issue={issue}>
+                    <Table>
+                        <tbody>
+                        <tr>
+                            <td>登録日</td>
+                            <td>{ dayjs(issue.created_at).format('YYYY年MM月DD日 HH:mm') }</td>
+                        </tr>
+                        <tr>
+                            <td>更新日</td>
+                            <td>{ dayjs(issue.updated_at).format('YYYY年MM月DD日 HH:mm') }</td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                    <Space />
+                </IssueForm>
+            </>
+        )
+    }
+
     return (
         <Layout title="課題編集">
-            <p>ID: {issue.id}</p>
-            <Space />
-            <div style={{textAlign: "right", marginTop: -50}}>
-                <Button color="red" onClick={handleDelete}>削除</Button>
-            </div>
-            <IssueForm submitAction={updateAction} issue={issue}>
-                <Table>
-                    <tbody>
-                    <tr>
-                        <td>登録日</td>
-                        <td>{ dayjs(issue.created_at).format('YYYY年MM月DD日 HH:mm') }</td>
-                    </tr>
-                    <tr>
-                        <td>更新日</td>
-                        <td>{ dayjs(issue.updated_at).format('YYYY年MM月DD日 HH:mm') }</td>
-                    </tr>
-                    </tbody>
-                </Table>
-                <Space />
-            </IssueForm>
+            <Content />
         </Layout>
     )
 }

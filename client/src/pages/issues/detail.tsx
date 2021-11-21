@@ -13,10 +13,12 @@ const IssueDetailPage: NextPage = () => {
     const { getItem } = useIssue()
     const { data: issue, error} = getItem(Number(getUrlParam('id')))
 
-    if (error) return <div>エラーが発生しました</div>
-    if (!issue) return <LoadingOverlay visible={true} />
-    return (
-        <Layout title="課題詳細">
+    const Content = () => {
+        if (error) return <div>エラーが発生しました</div>
+        if (!issue) return <LoadingOverlay visible={true} />
+
+        return (
+            <>
             <article>
                 <Table>
                     <tbody>
@@ -55,6 +57,13 @@ const IssueDetailPage: NextPage = () => {
                 <Button variant="outline" component="a">編集</Button>
             </Link>
             <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
+            </>
+        )
+    }
+
+    return (
+        <Layout title="課題詳細">
+            <Content />
         </Layout>
     )
 }

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>Index</h1>
@@ -10,4 +10,4 @@ const Home: NextPage = () => {
     )
 }
 
-export default Home
+export default HomePage

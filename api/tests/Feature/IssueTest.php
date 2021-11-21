@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Issue;
+use App\Models\User;
 
 class IssueTest extends TestCase
 {
@@ -13,6 +14,9 @@ class IssueTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
     }
 
     /**
