@@ -18,6 +18,7 @@ class CreateIssuesTable extends Migration
             $table->string('title');
             $table->text('body')->nullable();
             $table->unsignedTinyInteger('status')->default(1);
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

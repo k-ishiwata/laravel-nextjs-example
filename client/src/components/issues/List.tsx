@@ -42,7 +42,7 @@ const IssueList = () => {
                     <th>ID</th>
                     <th>タイトル</th>
                     <th>状態</th>
-                    <th>更新日</th>
+                    <th>担当者</th>
                     <th>登録日</th>
                     <th>アクション</th>
                 </tr>
@@ -63,7 +63,7 @@ const IssueList = () => {
                             <td width={80}><Badge fullWidth variant="filled" color={status[issue.status].color}>
                                 {status[issue.status].label}
                             </Badge></td>
-                            <td width={80}>{dayjs(issue.updated_at).format('YYYY/MM/DD')}</td>
+                            <td width={80}>{issue.user?.name || '未設定'}</td>
                             <td width={80}>{dayjs(issue.created_at).format('YYYY/MM/DD')}</td>
                             <td width={130}>
                                 <Group>

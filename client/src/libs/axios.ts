@@ -11,13 +11,19 @@ const axios = Axios.create({
 
 export default axios
 
-// バリデーションエラー表示
+/**
+ * バリデーションエラー表示
+ *
+ * @param notifications
+ * @param error
+ * @param title
+ */
 export const validateErrorNotice = (
     notifications: NotificationsContextProps,
     error: any,
     title: string = '更新に失敗しました'
 ) => {
-    if (error.response) {
+    if (error.response?.data.errors) {
         Object.values(error.response?.data.errors).map(
             (messages: any) => {
                 messages.map((message: string) => {

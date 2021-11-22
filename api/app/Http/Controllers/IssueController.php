@@ -8,15 +8,20 @@ use App\Http\Requests\IssueRequest;
 class IssueController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        return Issue::select('id','title','status','created_at','updated_at')
+        $issues = Issue::with(['user' => function ($q) {
+                $q->select('id', 'name');
+            }])
+            ->select('id','title','status','user_id','created_at','updated_at')
             ->orderByDesc('id')
             ->paginate(10);
+
+        return $issues
+            ? response()->json($issues, 201)
+            : response()->json([], 500);
     }
 
     /**
@@ -37,6 +42,9 @@ class IssueController extends Controller
      */
     public function show(Issue $issue)
     {
+        $issue->load(['user' => function ($q) {
+            $q->select('id', 'name');
+        }]);
         return response()->json($issue);
     }
 

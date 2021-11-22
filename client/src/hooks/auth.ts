@@ -23,24 +23,22 @@ export const useAuth = () => {
             ? String(router.query.redirect)
             : '/issues'
 
-        await
-            axios
-                .post('/api/login', props)
-                .then(() => {
-                    window.location.href = redirect
+        await axios
+            .post('/api/login', props)
+            .then(() => {
+                window.location.href = redirect
+            })
+            .catch(error => {
+                notifications.showNotification({
+                    title: 'ログインに失敗しました。',
+                    message: error.message,
+                    color: 'red'
                 })
-                .catch(error => {
-                    notifications.showNotification({
-                        title: 'ログインに失敗しました。',
-                        message: error.message,
-                        color: 'red'
-                    })
-                })
+            })
     }
 
     const logout = async () => {
-        await
-        axios
+        await axios
             .post('/api/logout').then(() => {
                 window.location.href = '/login'
             })

@@ -8,17 +8,21 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticatedController extends Controller
 {
     /**
+     * ログイン中のユーザー情報を取得
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function user()
     {
         $user = Auth::user();
 
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ]);
+        return $user
+            ? response()->json([
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ], 201)
+            : response()->json([], 500);
     }
 
     /**

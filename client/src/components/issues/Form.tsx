@@ -4,6 +4,7 @@ import { Issue, IssueCreate } from '@/types/Issue'
 import { InputWrapper, Input, Textarea, Button, Space, Select } from '@mantine/core'
 import { status } from '@/const'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import UserSelectList from '@/components/users/SelectList'
 
 type Props = {
     issue: Issue|IssueCreate,
@@ -96,7 +97,13 @@ const IssueForm: React.VFC<Props> = ({
                         error={errors.status?.message}
                     />
                 )}
-             />
+            />
+            <Space />
+            <UserSelectList
+                control={control}
+                selectedId={issue.user_id}
+                errorMessage={errors.user_id?.message}
+            />
             <Space />
             { children }
             <Button type="submit">保存</Button>

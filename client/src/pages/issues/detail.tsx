@@ -39,6 +39,10 @@ const IssueDetailPage: NextPage = () => {
                         <td>{status[issue.status].label}</td>
                     </tr>
                     <tr>
+                        <td>担当者</td>
+                        <td>{issue.user?.name || '未設定'}</td>
+                    </tr>
+                    <tr>
                         <td>登録日</td>
                         <td>{ dayjs(issue.created_at).format('YYYY年MM月DD日 HH:mm') }</td>
                     </tr>
