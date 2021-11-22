@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { Container, LoadingOverlay, Anchor } from '@mantine/core'
+import { Container, LoadingOverlay, Anchor, Header, Space } from '@mantine/core'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from "next/router"
+import Link from 'next/link'
 
 type Props = {
     children?: React.ReactNode
@@ -29,10 +30,17 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
 
     return (
         <>
-            <div style={{ position: 'absolute', right: 10, top: 10, cursor: 'pointer' }}>
-                <Anchor onClick={logout}>ログアウト</Anchor>
-            </div>
-            <Container>
+            <Header height={50} padding="md" fixed>
+                <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                    <Link href="/"><Anchor href="#">ダッシュボード</Anchor></Link>
+                    <Space />
+                    <Link href="/issues/"><Anchor href="#">課題一覧</Anchor></Link>
+                    <div style={{ marginLeft: 'auto' }}>
+                        <Anchor style={{ cursor: 'pointer' }} onClick={logout}>ログアウト</Anchor>
+                    </div>
+                </div>
+            </Header>
+            <Container style={{ paddingTop: 60, paddingBottom: 40 }}>
                 <Head>
                     <title>{ pageTitle }</title>
                 </Head>

@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import Layout from '@/components/Layout'
 
 const HomePage: NextPage = () => {
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h1>Index</h1>
+        <Layout title="ダッシュボード">
             <p><Link href="/issues/">課題一覧</Link></p>
-        </div>
+        </Layout>
     )
 }
 

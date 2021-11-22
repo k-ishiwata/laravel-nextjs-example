@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
-import { InputWrapper, Input, Textarea, Button, Space, Select } from '@mantine/core'
+import { InputWrapper, Input, Textarea, Button, Space, Select, Grid, Col } from '@mantine/core'
 import { status } from '@/const'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import UserSelectList from '@/components/users/SelectList'
@@ -75,35 +75,40 @@ const IssueForm: React.VFC<Props> = ({
                 error={errors.body?.message}
             />
             <Space />
-            <Controller
-                name="status"
-                control={control}
-                rules={{
-                    required: "必須です",
-                    pattern: {
-                        value: validateStatusReg,
-                        message: "項目から選択してください。"
-                    }
-                }}
-                defaultValue={issue.status}
-                render={({ field: {ref, onChange} }) => (
-                    <Select
-                        ref={ref}
-                        onChange={onChange}
-                        label="状態"
-                        required
-                        data={selectStatus}
-                        defaultValue={String(issue.status)}
-                        error={errors.status?.message}
+            <Grid>
+                <Col span={6}>
+                    <Controller
+                        name="status"
+                        control={control}
+                        rules={{
+                            required: "必須です",
+                            pattern: {
+                                value: validateStatusReg,
+                                message: "項目から選択してください。"
+                            }
+                        }}
+                        defaultValue={issue.status}
+                        render={({ field: {ref, onChange} }) => (
+                            <Select
+                                ref={ref}
+                                onChange={onChange}
+                                label="状態"
+                                required
+                                data={selectStatus}
+                                defaultValue={String(issue.status)}
+                                error={errors.status?.message}
+                            />
+                        )}
                     />
-                )}
-            />
-            <Space />
-            <UserSelectList
-                control={control}
-                selectedId={issue.user_id}
-                errorMessage={errors.user_id?.message}
-            />
+                </Col>
+                <Col span={6}>
+                    <UserSelectList
+                        control={control}
+                        selectedId={issue.user_id}
+                        errorMessage={errors.user_id?.message}
+                    />
+                </Col>
+            </Grid>
             <Space />
             { children }
             <Button type="submit">保存</Button>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Issue } from '@/types/Issue'
 import { useIssues } from '@/hooks/issue'
-import { Table, Button, Group, Loader, Pagination, Space, Badge } from '@mantine/core'
+import { Table, Button, Group, Loader, Pagination, Space, Badge, Anchor } from '@mantine/core'
 import dayjs from 'dayjs'
 import { getUrlParam } from '@/libs/libs'
 import { status } from '@/const'
@@ -12,7 +12,7 @@ const IssueList = () => {
     const router = useRouter()
     // pageパラメータを取得
     const defaultPage: number = Number(getUrlParam('page')) || 1
-    // page用ステート
+    // ページャー用ステート
     const [pageIndex, setPageIndex] = useState<number>(defaultPage)
     // 課題一覧を取得
     const { issues, error, deleteAction } = useIssues(pageIndex)
@@ -56,7 +56,7 @@ const IssueList = () => {
                                     pathname: '/issues/detail/',
                                     query: { id: issue.id },
                                 }}>
-                                    <a>{('00000' + issue.id).slice(-5)}</a>
+                                    <Anchor href="#">{('00000' + issue.id).slice(-5)}</Anchor>
                                 </Link>
                             </td>
                             <td>{issue.title}</td>
