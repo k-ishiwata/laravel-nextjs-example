@@ -25,7 +25,7 @@ class IssueFactory extends Factory
         return [
             'title' => $this->faker->realText(rand(20,50)),
             'body' => $this->faker->realText(rand(100,200)),
-            'status' => $this->faker->numberBetween(1,3),
+            'status_id' => $this->faker->numberBetween(1,3),
             'user_id' => $this->faker->numberBetween(1,3),
             'created_at' => $randomDate,
             'updated_at' => $randomDate

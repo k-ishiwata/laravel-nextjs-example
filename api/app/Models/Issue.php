@@ -10,11 +10,11 @@ class Issue extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'body', 'status', 'user_id'
+        'title', 'body', 'status_id', 'user_id'
     ];
 
     protected $casts = [
-        'status' => 'integer'
+        'status_id' => 'integer'
     ];
 
     /**

@@ -26,7 +26,7 @@ class IssueRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'body' => 'max:1000',
-            'status' => 'required|numeric',
+            'status_id' => 'required|numeric',
         ];
     }
 
@@ -38,7 +38,7 @@ class IssueRequest extends FormRequest
         return [
             'title' => 'タイトル',
             'body' => '内容',
-            'status' => 'ステータス',
+            'status_id' => 'ステータス',
         ];
     }
 }

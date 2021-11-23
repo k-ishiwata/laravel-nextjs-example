@@ -39,7 +39,7 @@ class IssueTest extends TestCase
         $data = [
             'title' => 'テスト課題',
             'body' => 'テスト内容',
-            'status' => 1,
+            'status_id' => 1,
         ];
 
         $response = $this->postJson('api/issues', $data);
@@ -73,7 +73,7 @@ class IssueTest extends TestCase
     {
         $data = [
             'title' => str_repeat('あ', 256),
-            'status' => 1,
+            'status_id' => 1,
         ];
 
         $response = $this->postJson('api/issues', $data);
@@ -92,7 +92,7 @@ class IssueTest extends TestCase
         $data = [
             'title' => 'テスト課題',
             'body' => str_repeat('あ', 1001),
-            'status' => 1,
+            'status_id' => 1,
         ];
 
         $response = $this->postJson('api/issues', $data);

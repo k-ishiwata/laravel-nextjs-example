@@ -9,7 +9,7 @@ export type Issue = {
     id: number
     title: string
     body: string
-    status: number
+    status_id: number
     user_id?: number
     user?: User
     created_at: Date
@@ -19,7 +19,7 @@ export type Issue = {
 export type IssueCreate = {
     title: string
     body: string
-    status: number
+    status_id: number
     user_id?: number
 }
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
-import { InputWrapper, Input, Textarea, Button, Space, Select, Grid, Col } from '@mantine/core'
-import { status } from '@/const'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import { InputWrapper, Input, Textarea, Button, Space, Grid, Col } from '@mantine/core'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import UserSelectList from '@/components/users/SelectList'
+import IssueStatusSelectList from '@/components/issueStatuses/SelectList'
 
 type Props = {
     issue: Issue|IssueCreate,
@@ -24,21 +24,6 @@ const IssueForm: React.VFC<Props> = ({
         const updateData: Issue = {...issue, ...data}
         return submitAction(updateData)
     }
-
-    // 状態セレクト用の配列を作る
-    const selectStatus = status.slice(1).map(item => {
-        return {
-            value: String(item.value),
-            label: item.label
-        }
-    })
-
-    // 状態セレクトのバリデーションパターン
-    const validateStatusReg = new RegExp(
-        selectStatus.reduce((prev, current, index) => {
-            return prev += (index === 0 ? '' : '|') + current.value
-        }, '')
-    )
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,28 +62,10 @@ const IssueForm: React.VFC<Props> = ({
             <Space />
             <Grid>
                 <Col span={6}>
-                    <Controller
-                        name="status"
+                    <IssueStatusSelectList
                         control={control}
-                        rules={{
-                            required: "必須です",
-                            pattern: {
-                                value: validateStatusReg,
-                                message: "項目から選択してください。"
-                            }
-                        }}
-                        defaultValue={issue.status}
-                        render={({ field: {ref, onChange} }) => (
-                            <Select
-                                ref={ref}
-                                onChange={onChange}
-                                label="状態"
-                                required
-                                data={selectStatus}
-                                defaultValue={String(issue.status)}
-                                error={errors.status?.message}
-                            />
-                        )}
+                        selectedId={issue.status_id}
+                        errorMessage={errors.status_id?.message}
                     />
                 </Col>
                 <Col span={6}>

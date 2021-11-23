@@ -15,12 +15,12 @@ class IssueController extends Controller
         $issues = Issue::with(['user' => function ($q) {
                 $q->select('id', 'name');
             }])
-            ->select('id','title','status','user_id','created_at','updated_at')
+            ->select('id','title','status_id','user_id','created_at','updated_at')
             ->orderByDesc('id')
             ->paginate(10);
 
         return $issues
-            ? response()->json($issues, 201)
+            ? response()->json($issues)
             : response()->json([], 500);
     }
 

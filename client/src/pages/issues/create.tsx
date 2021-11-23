@@ -10,7 +10,7 @@ const IssueCreatePage: NextPage = () => {
     const issue: IssueCreate = {
         title: '',
         body: '',
-        status: 1
+        status_id: 1
     }
 
     return (

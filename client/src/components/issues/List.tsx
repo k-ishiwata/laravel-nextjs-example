@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Issue } from '@/types/Issue'
 import { useIssues } from '@/hooks/issue'
+import { useIssueStatus } from '@/hooks/issueStatus'
 import { Table, Button, Group, Loader, Pagination, Space, Badge, Anchor } from '@mantine/core'
 import dayjs from 'dayjs'
 import { getUrlParam } from '@/libs/libs'
-import { status } from '@/const'
 
 const IssueList = () => {
     const router = useRouter()
@@ -16,6 +16,8 @@ const IssueList = () => {
     const [pageIndex, setPageIndex] = useState<number>(defaultPage)
     // 課題一覧を取得
     const { issues, error, deleteAction } = useIssues(pageIndex)
+    // 課題ステータス
+    const { data: issueStatus, error: statusError } = useIssueStatus()
 
     const handlePagerClick = (page: number) => {
         setPageIndex(page)
@@ -31,8 +33,8 @@ const IssueList = () => {
         deleteAction(issue)
     }
 
-    if (error) return <div>エラーが発生しました</div>
-    if (!issues) return <Loader />
+    if (error || statusError) return <div>エラーが発生しました</div>
+    if (!issues || !issueStatus) return <Loader />
 
     return (
         <div>
@@ -60,9 +62,11 @@ const IssueList = () => {
                                 </Link>
                             </td>
                             <td>{issue.title}</td>
-                            <td width={80}><Badge fullWidth variant="filled" color={status[issue.status].color}>
-                                {status[issue.status].label}
-                            </Badge></td>
+                            <td width={80}>
+                                <Badge fullWidth variant="filled" color={issueStatus[issue.status_id]?.color}>
+                                    {issueStatus[issue.status_id]?.name}
+                                </Badge>
+                            </td>
                             <td width={80}>{issue.user?.name || '未設定'}</td>
                             <td width={80}>{dayjs(issue.created_at).format('YYYY/MM/DD')}</td>
                             <td width={130}>
