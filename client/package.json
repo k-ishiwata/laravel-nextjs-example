@@ -13,6 +13,7 @@
     "@mantine/core": "^3.1.0",
     "@mantine/hooks": "^3.1.0",
     "@mantine/notifications": "^3.1.0",
+    "@radix-ui/react-icons": "^1.0.3",
     "axios": "^0.23.0",
     "dayjs": "^1.10.7",
     "next": "^12.0.4",

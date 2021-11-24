@@ -10,6 +10,6 @@ class IssueStatus extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'color'
+        'label', 'color'
     ];
 }

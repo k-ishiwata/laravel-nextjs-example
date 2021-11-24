@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Issue } from '@/types/Issue'
 import { useIssues } from '@/hooks/issue'
-import { useIssueStatus } from '@/hooks/issueStatus'
+import { useIssueStatusList } from '@/hooks/issueStatus'
 import { Table, Button, Group, Loader, Pagination, Space, Badge, Anchor } from '@mantine/core'
 import dayjs from 'dayjs'
 import { getUrlParam } from '@/libs/libs'
@@ -17,7 +17,7 @@ const IssueList = () => {
     // 課題一覧を取得
     const { issues, error, deleteAction } = useIssues(pageIndex)
     // 課題ステータス
-    const { data: issueStatus, error: statusError } = useIssueStatus()
+    const { data: issueStatus, error: statusError } = useIssueStatusList()
 
     const handlePagerClick = (page: number) => {
         setPageIndex(page)
@@ -58,14 +58,18 @@ const IssueList = () => {
                                     pathname: '/issues/detail/',
                                     query: { id: issue.id },
                                 }}>
-                                    <Anchor href="#">{('00000' + issue.id).slice(-5)}</Anchor>
+                                    <Anchor>{('00000' + issue.id).slice(-5)}</Anchor>
                                 </Link>
                             </td>
                             <td>{issue.title}</td>
                             <td width={80}>
-                                <Badge fullWidth variant="filled" color={issueStatus[issue.status_id]?.color}>
-                                    {issueStatus[issue.status_id]?.name}
-                                </Badge>
+                            {
+                                issueStatus[issue.status_id]
+                                    ? <Badge fullWidth variant="filled" color={issueStatus[issue.status_id]?.color}>
+                                        {issueStatus[issue.status_id]?.label}
+                                      </Badge>
+                                    : ''
+                            }
                             </td>
                             <td width={80}>{issue.user?.name || '未設定'}</td>
                             <td width={80}>{dayjs(issue.created_at).format('YYYY/MM/DD')}</td>

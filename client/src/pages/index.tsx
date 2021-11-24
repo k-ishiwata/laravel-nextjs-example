@@ -6,6 +6,7 @@ const HomePage: NextPage = () => {
     return (
         <Layout title="ダッシュボード">
             <p><Link href="/issues/">課題一覧</Link></p>
+            <p><Link href="/issue-statuses/">ステータス</Link></p>
         </Layout>
     )
 }

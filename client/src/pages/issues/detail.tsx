@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { useIssue } from '@/hooks/issue'
-import { useIssueStatus } from '@/hooks/issueStatus'
+import { useIssueStatusList } from '@/hooks/issueStatus'
 import { Button, Space, Table, LoadingOverlay } from '@mantine/core'
 import dayjs from 'dayjs'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ const IssueDetailPage: NextPage = () => {
     const { getItem } = useIssue()
     const { data: issue, error} = getItem(Number(getUrlParam('id')))
     // 課題ステータス
-    const { data: issueStatus, error: statusError } = useIssueStatus()
+    const { data: issueStatus, error: statusError } = useIssueStatusList()
 
     const Content = () => {
         if (error || statusError) return <div>エラーが発生しました</div>
@@ -38,7 +38,7 @@ const IssueDetailPage: NextPage = () => {
                     </tr>
                     <tr>
                         <td>状態</td>
-                        <td>{issueStatus[issue.status_id]?.name}</td>
+                        <td>{issueStatus[issue.status_id]?.label}</td>
                     </tr>
                     <tr>
                         <td>担当者</td>

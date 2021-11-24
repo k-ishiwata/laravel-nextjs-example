@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 import { NormalizeCSS } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
 import { SWRConfig } from 'swr'
+import '../styles/globals.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Issue } from '@/types/Issue'
 import { Loader, Select } from '@mantine/core'
-import { useIssueStatus } from '@/hooks/issueStatus'
+import { useIssueStatusList } from '@/hooks/issueStatus'
 import { Controller, Control } from 'react-hook-form'
 import type { SelectItem } from '@mantine/core'
 
@@ -23,7 +23,7 @@ const IssueStatusSelectList: React.VFC<Props> = ({
     selectedId,
     errorMessage
 }) => {
-    const { data, error } = useIssueStatus()
+    const { data, error } = useIssueStatusList()
 
     if (error) return <div>エラーが発生しました</div>
     if (!data) return <Loader />
@@ -32,7 +32,7 @@ const IssueStatusSelectList: React.VFC<Props> = ({
     const selectData: SelectItem[] = Object.keys(data).map((index) => {
         return {
             value: index,
-            label: data[Number(index)].name
+            label: data[Number(index)].label
         }
     })
 

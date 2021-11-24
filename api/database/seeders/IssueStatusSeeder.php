@@ -16,17 +16,17 @@ class IssueStatusSeeder extends Seeder
     {
         DB::table('issue_statuses')->insert([
             [
-                'name' => '未対応',
+                'label' => '未対応',
                 'color' => 'gray',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],[
-                'name' => '処理中',
+                'label' => '処理中',
                 'color' => 'blue',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],[
-                'name' => '完了',
+                'label' => '完了',
                 'color' => 'green',
                 'created_at' => now(),
                 'updated_at' => now(),

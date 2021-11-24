@@ -1,8 +1,12 @@
 export type IssueStatus = {
     id: number
-    name: string
-    body: string
+    label: string
     color: string
     created_at: Date
     updated_at: Date
+}
+
+export type IssueStatusCreate = {
+    label: string
+    color: string
 }

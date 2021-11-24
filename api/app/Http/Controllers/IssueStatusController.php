@@ -69,7 +69,7 @@ class IssueStatusController extends Controller
      */
     public function list()
     {
-        $issuesStatus = IssueStatus::select('id', 'name', 'color')->get()->keyBy('id');
+        $issuesStatus = IssueStatus::select('id', 'label', 'color')->get()->keyBy('id');
 
         return $issuesStatus
             ? response()->json($issuesStatus)

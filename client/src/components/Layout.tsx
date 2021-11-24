@@ -17,6 +17,7 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
     const { logout, user, error } = useAuth()
 
     useEffect(() => {
+        // ログイン必須ページはログインしていなかったらログイン画面へリダイレクト
         if (!isGuest && !user && error) {
             const redirectUrl = router.pathname
                 ? '?redirect=' + router.pathname + window.location.search
@@ -32,11 +33,13 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
         <>
             <Header height={50} padding="md" fixed>
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <Link href="/"><Anchor href="#">ダッシュボード</Anchor></Link>
+                    <Link href="/"><Anchor>ダッシュボード</Anchor></Link>
                     <Space />
-                    <Link href="/issues/"><Anchor href="#">課題一覧</Anchor></Link>
+                    <Link href="/issues/"><Anchor>課題一覧</Anchor></Link>
+                    <Space />
+                    <Link href="/issue-statuses/"><Anchor>ステータス</Anchor></Link>
                     <div style={{ marginLeft: 'auto' }}>
-                        <Anchor style={{ cursor: 'pointer' }} onClick={logout}>ログアウト</Anchor>
+                        <Anchor onClick={logout}>ログアウト</Anchor>
                     </div>
                 </div>
             </Header>

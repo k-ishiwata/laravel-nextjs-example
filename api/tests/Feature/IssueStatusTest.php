@@ -38,7 +38,7 @@ class IssueStatusTest extends TestCase
     public function 登録することができる()
     {
         $data = [
-            'name' => 'テスト',
+            'label' => 'テスト',
             'color' => 'test'
         ];
 
@@ -55,13 +55,13 @@ class IssueStatusTest extends TestCase
     {
         $issue = IssueStatus::firstWhere('id', 1);
 
-        $issue->name = '書き換え';
+        $issue->label = '書き換え';
 
         $response = $this->putJson("api/issue-statuses/{$issue->id}", $issue->toArray());
 
         $response
             ->assertOk()
-            ->assertJsonFragment(['name' => $issue->name]);
+            ->assertJsonFragment(['label' => $issue->label]);
     }
 
     /**
