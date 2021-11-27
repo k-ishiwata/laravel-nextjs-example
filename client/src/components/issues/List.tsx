@@ -70,8 +70,8 @@ const IssueList = () => {
                             </td>
                             <td width={80}>{issue.user?.name || '未設定'}</td>
                             <td width={80}>{dayjs(issue.created_at).format('YYYY/MM/DD')}</td>
-                            <td width={130}>
-                                <Group>
+                            <td width={140}>
+                                <Group spacing="xs">
                                     <Link href={{
                                         pathname: '/issues/edit/',
                                         query: { id: issue.id },

@@ -1,6 +1,9 @@
 import Axios from 'axios'
-import { NotificationsContextProps } from '@mantine/notifications/lib/types'
+import { toast } from 'react-toastify'
 
+/**
+ * Axios初期設定
+ */
 const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
@@ -14,32 +17,20 @@ export default axios
 /**
  * バリデーションエラー表示
  *
- * @param notifications
  * @param error
- * @param title
  */
 export const validateErrorNotice = (
-    notifications: NotificationsContextProps,
-    error: any,
-    title: string = '更新に失敗しました'
+    error: any
 ) => {
     if (error.response?.data.errors) {
         Object.values(error.response?.data.errors).map(
             (messages: any) => {
                 messages.map((message: string) => {
-                    notifications.showNotification({
-                        title: title,
-                        message: message,
-                        color: 'red'
-                    })
+                    toast.error(message)
                 })
             }
         )
     } else {
-        notifications.showNotification({
-            title: title,
-            message: error.message,
-            color: 'red'
-        })
+        toast.error(error.message)
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import { Button, Input, InputWrapper, Space, PasswordInput, Container } from '@mantine/core'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -8,12 +8,17 @@ import Head from 'next/head'
 const LoginPage: NextPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { login } = useAuth()
+    const [ isButtonLoading, setIsButtonLoading ] = useState(false)
 
     const onSubmit: SubmitHandler<{
         email: string,
         password: string
     }> = data => {
+        setIsButtonLoading(true)
         login(data)
+        window.setTimeout(() => {
+            setIsButtonLoading(false)
+        }, 1500)
     }
 
     return (
@@ -49,7 +54,7 @@ const LoginPage: NextPage = () => {
                     defaultValue="123456789"
                 />
                 <Space />
-                <Button type="submit">ログイン</Button>
+                <Button type="submit" loading={isButtonLoading}>ログイン</Button>
             </form>
         </Container>
     )

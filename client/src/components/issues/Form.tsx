@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
 import { InputWrapper, Input, Textarea, Button, Space, Grid, Col } from '@mantine/core'
@@ -9,7 +9,7 @@ import IssueStatusSelectList from '@/components/issueStatuses/SelectList'
 type Props = {
     issue: Issue|IssueCreate,
     children?: React.ReactNode,
-    submitAction: (issue: Issue) => Promise<void>
+    submitAction: (issue: Issue, callback?: () => void) => Promise<void>
 }
 
 const IssueForm: React.VFC<Props> = ({
@@ -19,10 +19,15 @@ const IssueForm: React.VFC<Props> = ({
 }) => {
     const router = useRouter()
     const { register, handleSubmit, formState: { errors }, control } = useForm<Issue>()
+    const [ isButtonLoading, setIsButtonLoading ] = useState(false)
 
     const onSubmit: SubmitHandler<Issue> = data => {
+        setIsButtonLoading(true)
         const updateData: Issue = {...issue, ...data}
-        return submitAction(updateData)
+
+        return submitAction(updateData, () => {
+            setIsButtonLoading(false)
+        })
     }
 
     return (
@@ -78,7 +83,7 @@ const IssueForm: React.VFC<Props> = ({
             </Grid>
             <Space />
             { children }
-            <Button type="submit">保存</Button>
+            <Button type="submit" loading={isButtonLoading}>保存</Button>
             <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
         </form>
     )

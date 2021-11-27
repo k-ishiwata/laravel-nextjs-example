@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import axios, { validateErrorNotice } from '@/libs/axios'
 import { IssueStatus, IssueStatusCreate } from "@/types/IssueStatus"
-import { useNotifications } from "@mantine/notifications"
+import { toast } from 'react-toastify'
 
 const APIURL = '/api/issue-statuses'
 
@@ -23,13 +23,26 @@ export const useIssueStatusList = () => {
 export const useIssueStatuses = () => {
     const api = `${APIURL}`
 
-    const notifications = useNotifications()
-
     const { data, error, mutate } = useSWR<IssueStatus[]>(api, () =>
         axios
             .get(api)
             .then((res: any) => res.data)
     )
+
+    const createAction = async (issueStatus: IssueStatusCreate, callback?: () => void) => {
+        await axios
+            .post(APIURL, issueStatus)
+            .then(() => {
+                mutate()
+                toast.success('登録に成功しました')
+            })
+            .catch(error => {
+                validateErrorNotice(error)
+            })
+            .finally(() => {
+                if (callback) callback()
+            })
+    }
 
     const updateAction = async (issueStatus: IssueStatus, callback?: () => void) => {
         const api = `${APIURL}/${issueStatus.id}`
@@ -37,16 +50,13 @@ export const useIssueStatuses = () => {
             .put(api, issueStatus)
             .then(() => {
                 mutate()
-                notifications.showNotification({
-                    title: '更新に成功しました',
-                    message: '',
-                    color: 'green'
-                })
-
-                if (callback) callback()
+                toast.success('更新に成功しました')
             })
             .catch(error => {
-                validateErrorNotice(notifications, error, '更新に失敗しました')
+                validateErrorNotice(error)
+            })
+            .finally(() => {
+                if (callback) callback()
             })
     }
 
@@ -56,44 +66,19 @@ export const useIssueStatuses = () => {
             .delete(api)
             .then(() => {
                 mutate()
-                notifications.showNotification({
-                    title: '削除に成功しました',
-                    message: '',
-                    color: 'green'
-                })
+                toast.success('削除に成功しました')
             })
             .catch(error => {
-                notifications.showNotification({
-                    title: '削除に失敗しました',
-                    message: error.message,
-                    color: 'red'
-                })
-            })
-    }
-
-    const createAction = async (issueStatus: IssueStatusCreate, callback?: () => void) => {
-        await axios
-            .post(APIURL, issueStatus)
-            .then(() => {
-                mutate()
-                notifications.showNotification({
-                    title: '登録に成功しました',
-                    message: '',
-                    color: 'green'
-                })
-
-                if (callback) callback()
-            })
-            .catch(error => {
-                validateErrorNotice(notifications, error, '登録に失敗しました')
+                toast.error('削除に失敗しました')
+                console.log(error.message)
             })
     }
 
     return {
         data,
         error,
-        updateAction,
         createAction,
+        updateAction,
         deleteAction
     }
 }

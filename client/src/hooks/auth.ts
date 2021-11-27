@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import axios from '@/libs/axios'
-import { useNotifications } from '@mantine/notifications'
-
+import { toast } from 'react-toastify'
 
 export const useAuth = () => {
     const router = useRouter()
-    const notifications = useNotifications()
 
     const { data: user, error } = useSWR('/api/user', async () =>
         await axios
@@ -18,22 +16,14 @@ export const useAuth = () => {
     )
 
     const login = async ({ ...props }) => {
-
-        const redirect = router.query.redirect
-            ? String(router.query.redirect)
-            : '/issues'
-
+        const redirect = router.query.redirect || '/issues'
         await axios
             .post('/api/login', props)
             .then(() => {
-                window.location.href = redirect
+                window.location.href = String(redirect)
             })
-            .catch(error => {
-                notifications.showNotification({
-                    title: 'ログインに失敗しました。',
-                    message: error.message,
-                    color: 'red'
-                })
+            .catch(() => {
+                toast.error('ログインに失敗しました')
             })
     }
 
@@ -42,12 +32,8 @@ export const useAuth = () => {
             .post('/api/logout').then(() => {
                 window.location.href = '/login'
             })
-            .catch(error => {
-                notifications.showNotification({
-                    title: 'ログアウトに失敗しました。',
-                    message: error.message,
-                    color: 'red'
-                })
+            .catch(() => {
+                toast.error('ログアウトに失敗しました')
             })
     }
 

@@ -1,14 +1,14 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useSWR, { useSWRConfig } from 'swr'
 import axios, { validateErrorNotice } from '@/libs/axios'
 import { Issue, IssuePager, IssueCreate } from '@/types/Issue'
-import { useNotifications } from '@mantine/notifications'
+import { toast } from 'react-toastify'
 
 const APIURL = '/api/issues'
 
 export const useIssues = (pageIndex: number = 1) => {
     const api = `${APIURL}?page=${pageIndex}`
-    const notifications = useNotifications()
 
     const { data: issues, error, mutate } = useSWR<IssuePager>(api, () =>
         axios
@@ -20,19 +20,11 @@ export const useIssues = (pageIndex: number = 1) => {
         await axios
             .delete(`${APIURL}/${issue.id}`)
             .then(() => {
-                notifications.showNotification({
-                    title: '削除に成功しました',
-                    message: '',
-                    color: 'green'
-                })
+                toast.success('削除に成功しました')
                 mutate(issues)
             })
-            .catch(error => {
-                notifications.showNotification({
-                    title: '削除に失敗しました',
-                    message: error.message,
-                    color: 'red'
-                })
+            .catch(() => {
+                toast.error('削除に失敗しました')
             })
     }
 
@@ -45,8 +37,9 @@ export const useIssues = (pageIndex: number = 1) => {
 
 export const useIssue = () => {
     const { mutate } = useSWRConfig()
-    const notifications = useNotifications()
     const router = useRouter()
+    // ボタンローディング用タイマー
+    let timer: number
 
     const getItem = (id: number) => {
         const api = `${APIURL}/${id}`
@@ -57,20 +50,42 @@ export const useIssue = () => {
         )
     }
 
-    const updateAction = async (issue: Issue) => {
+    const createAction = async (issue: IssueCreate, callback?: () => void) => {
+        await axios
+            .post(APIURL, issue)
+            .then(() => {
+                toast.success('登録に成功しました')
+                router.replace('/issues/')
+            })
+            .catch(error => {
+                validateErrorNotice(error)
+            })
+            .finally(() => {
+                if (callback) {
+                    timer = window.setTimeout(() => {
+                        callback()
+                    }, 1000)
+                }
+            })
+    }
+
+    const updateAction = async (issue: Issue, callback?: () => void) => {
         const api = `${APIURL}/${issue.id}`
         await axios
             .put(api, issue)
             .then(() => {
                 mutate(api)
-                notifications.showNotification({
-                    title: '更新に成功しました',
-                    message: '',
-                    color: 'green'
-                })
+                toast.success('更新に成功しました')
             })
             .catch(error => {
-                validateErrorNotice(notifications, error, '更新に失敗しました')
+                validateErrorNotice(error)
+            })
+            .finally(() => {
+                if (callback) {
+                    timer = window.setTimeout(() => {
+                        callback()
+                    }, 1000)
+                }
             })
     }
 
@@ -79,37 +94,17 @@ export const useIssue = () => {
         await axios
             .delete(api)
             .then(() => {
-                notifications.showNotification({
-                    title: '削除に成功しました',
-                    message: '',
-                    color: 'green'
-                })
+                toast.success('削除に成功しました')
                 router.replace('/issues/')
             })
-            .catch(error => {
-                notifications.showNotification({
-                    title: '削除に失敗しました',
-                    message: error.message,
-                    color: 'red'
-                })
+            .catch(() => {
+                toast.error('削除に失敗しました')
             })
     }
 
-    const createAction = async (issue: IssueCreate) => {
-        await axios
-            .post(APIURL, issue)
-            .then(() => {
-                notifications.showNotification({
-                    title: '登録に成功しました',
-                    message: '',
-                    color: 'green'
-                })
-                router.replace('/issues/')
-            })
-            .catch(error => {
-                validateErrorNotice(notifications, error, '登録に失敗しました')
-            })
-    }
+    useEffect(() => {
+        return () => clearInterval(timer)
+    }, [])
 
     return {
         getItem,
