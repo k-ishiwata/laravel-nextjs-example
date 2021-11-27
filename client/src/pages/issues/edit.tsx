@@ -6,16 +6,14 @@ import IssueForm from '@/components/issues/Form'
 import { Button, Space, LoadingOverlay, Table } from '@mantine/core'
 import { getUrlParam } from '@/libs/libs'
 import dayjs from 'dayjs'
+import { Issue } from '@/types/Issue'
+import { useConfirmModal } from '@/hooks/confirmModal'
 
 const IssueEditPage: NextPage = () => {
     const { updateAction, deleteAction, getItem } = useIssue()
     const { data: issue, error } = getItem(Number(getUrlParam('id')))
-
-    const handleDelete = () => {
-        const result = window.confirm("本当に削除しますか？")
-        if (!result) return
-        if (issue) deleteAction(issue)
-    }
+    // 確認モーダル
+    const { deleteModal } = useConfirmModal<Issue>(deleteAction)
 
     const Content = () => {
         if (error) return <div>エラーが発生しました</div>
@@ -25,7 +23,7 @@ const IssueEditPage: NextPage = () => {
                 <p>ID: {issue.id}</p>
                 <Space />
                 <div style={{textAlign: "right", marginTop: -50}}>
-                    <Button color="red" onClick={handleDelete}>削除</Button>
+                    <Button color="red" onClick={() => deleteModal(issue)}>削除</Button>
                 </div>
                 <IssueForm submitAction={updateAction} issue={issue}>
                     <Table>

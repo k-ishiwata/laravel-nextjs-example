@@ -7,6 +7,7 @@ import { useIssueStatusList } from '@/hooks/issueStatus'
 import { Table, Button, Group, Loader, Pagination, Space, Badge, Anchor } from '@mantine/core'
 import dayjs from 'dayjs'
 import { getUrlParam } from '@/libs/libs'
+import { useConfirmModal } from '@/hooks/confirmModal'
 
 const IssueList = () => {
     const router = useRouter()
@@ -18,6 +19,8 @@ const IssueList = () => {
     const { issues, error, deleteAction } = useIssues(pageIndex)
     // 課題ステータス
     const { data: issueStatus, error: statusError } = useIssueStatusList()
+    // 確認モーダル
+    const { deleteModal } = useConfirmModal<Issue>(deleteAction)
 
     const handlePagerClick = (page: number) => {
         setPageIndex(page)
@@ -25,12 +28,6 @@ const IssueList = () => {
         router.push({
             query: { page :page }
         });
-    }
-
-    const handleDelete = (issue: Issue) => {
-        const result = window.confirm("本当に削除しますか？")
-        if (!result) return
-        deleteAction(issue)
     }
 
     if (error || statusError) return <div>エラーが発生しました</div>
@@ -81,7 +78,7 @@ const IssueList = () => {
                                     }}>
                                         <Button variant="outline" size="xs" component="a">編集</Button>
                                     </Link>
-                                    <Button color="red" size="xs" onClick={() => handleDelete(issue)}>削除</Button>
+                                    <Button color="red" size="xs" onClick={() => deleteModal(issue)}>削除</Button>
                                 </Group>
                             </td>
                         </tr>

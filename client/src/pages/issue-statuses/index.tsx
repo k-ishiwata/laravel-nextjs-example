@@ -6,6 +6,7 @@ import { Button, Loader, Modal, Space } from '@mantine/core'
 import { useIssueStatuses } from '@/hooks/issueStatus'
 import { IssueStatus } from '@/types/IssueStatus'
 import IssueStatusForm from '@/components/issueStatuses/Form'
+import { useConfirmModal } from '@/hooks/confirmModal'
 
 const IssueStatusPage: NextPage = () => {
     const [modalOpened, setModalOpened] = useState(false)
@@ -13,12 +14,8 @@ const IssueStatusPage: NextPage = () => {
 
     // 課題ステータス一覧
     const { data, error, updateAction, createAction, deleteAction } = useIssueStatuses()
-
-    const handleDelete = (issueStatus: IssueStatus) => {
-        const result = window.confirm("本当に削除しますか？")
-        if (!result) return
-        deleteAction(issueStatus)
-    }
+    // 確認モーダル
+    const { deleteModal } = useConfirmModal<IssueStatus>(deleteAction)
 
     const handleOpenModal = (editId: number|null = null): void => {
         setSelectIndex(editId)
@@ -39,7 +36,7 @@ const IssueStatusPage: NextPage = () => {
                 <IssueStatusList
                     data={data}
                     handleOpenModal={handleOpenModal}
-                    handleDelete={handleDelete}
+                    handleDelete={deleteModal}
                 />
                 <Modal
                     opened={modalOpened}

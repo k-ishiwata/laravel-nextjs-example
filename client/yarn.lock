@@ -200,6 +200,11 @@
   resolved "https://registry.npmjs.org/@mantine/hooks/-/hooks-3.1.0.tgz"
   integrity sha512-GkNDZH+FjTaCHRfx3shsvSOONpKhmTGP5PwijTDiePrtfPxxFOWP8LQlZrKsUq3gPB89UTf+uUykxh7cogckOg==
 
+"@mantine/modals@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@mantine/modals/-/modals-3.2.2.tgz#e5678a47f3ffbada56fdb9f892ced307d1156440"
+  integrity sha512-Hr29MvFomyMaOvRd5kZy0pcLDEmHZ1rDZjf8jhydPmn6YwGdMgG4AwMIOG/58ibSjZBDzGL44m2IVo7LviOFQA==
+
 "@mantine/notifications@^3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@mantine/notifications/-/notifications-3.1.0.tgz"
