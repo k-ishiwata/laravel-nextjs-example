@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { Container, LoadingOverlay, Anchor, Header, Space } from '@mantine/core'
+import { Container, LoadingOverlay, Anchor, Header, Space, Menu } from '@mantine/core'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from "next/router"
 import Link from 'next/link'
+import { GearIcon, ExitIcon } from '@radix-ui/react-icons'
 
 type Props = {
     children?: React.ReactNode
@@ -33,13 +34,16 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
         <>
             <Header height={50} padding="md" fixed>
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <Link href="/"><Anchor>ダッシュボード</Anchor></Link>
+                    <Link href="/"><Anchor size="sm">ダッシュボード</Anchor></Link>
                     <Space />
-                    <Link href="/issues/"><Anchor>課題一覧</Anchor></Link>
+                    <Link href="/issues/"><Anchor size="sm">課題一覧</Anchor></Link>
                     <Space />
-                    <Link href="/issue-statuses/"><Anchor>ステータス</Anchor></Link>
+                    <Link href="/issue-statuses/"><Anchor size="sm">ステータス</Anchor></Link>
                     <div style={{ marginLeft: 'auto' }}>
-                        <Anchor onClick={logout}>ログアウト</Anchor>
+                        <Menu control={<Anchor variant="text">{ user.name }</Anchor>} gutter={12} zIndex={1000}>
+                            <Menu.Item icon={<GearIcon />}>設定</Menu.Item>
+                            <Menu.Item icon={<ExitIcon />} onClick={logout}>ログアウト</Menu.Item>
+                        </Menu>
                     </div>
                 </div>
             </Header>

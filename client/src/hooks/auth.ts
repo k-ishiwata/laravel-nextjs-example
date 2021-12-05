@@ -1,19 +1,31 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import axios from '@/libs/axios'
+import axios, { validateErrorNotice } from '@/libs/axios'
 import { toast } from 'react-toastify'
+import { User } from '@/types/User'
 
 export const useAuth = () => {
     const router = useRouter()
 
     const { data: user, error } = useSWR('/api/user', async () =>
         await axios
-            .get('/api/user')
+            .get<User>('/api/user')
             .then(res => res.data)
             .catch(error => {
                 throw error.response
             })
     )
+
+    const register = async ({ ...props }) => {
+        await axios
+            .post('/api/register', props)
+            .then(() => {
+                window.location.href = '/'
+            })
+            .catch(error => {
+                validateErrorNotice(error)
+            })
+    }
 
     const login = async ({ ...props }) => {
         const redirect = router.query.redirect || '/issues'
@@ -43,6 +55,7 @@ export const useAuth = () => {
     return {
         user,
         error,
+        register,
         login,
         logout,
         loading,

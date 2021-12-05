@@ -72,8 +72,10 @@ const IssueStatusForm: React.VFC<Props> = ({
                 </Group>
             </InputWrapper>
             <Space />
-            <Button type="submit">保存</Button>
-            <Button variant="light" color="gray" onClick={handleClose}>閉じる</Button>
+            <Group spacing="xs">
+                <Button type="submit">保存</Button>
+                <Button variant="light" color="gray" onClick={handleClose}>閉じる</Button>
+            </Group>
         </form>
     )
 }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
-import { Button, Input, InputWrapper, Space, PasswordInput, Container } from '@mantine/core'
+import { Button, Input, InputWrapper, Space, PasswordInput, Container, Anchor, Group } from '@mantine/core'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
+import Link from 'next/link'
 
 const LoginPage: NextPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -54,7 +55,10 @@ const LoginPage: NextPage = () => {
                     defaultValue="123456789"
                 />
                 <Space />
-                <Button type="submit" loading={isButtonLoading}>ログイン</Button>
+                <Group>
+                    <Button type="submit" loading={isButtonLoading}>ログイン</Button>
+                    <Link href="/register"><Anchor size="sm">新規ユーザー登録</Anchor></Link>
+                </Group>
             </form>
         </Container>
     )

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
-import { InputWrapper, Input, Textarea, Button, Space, Grid, Col } from '@mantine/core'
+import { InputWrapper, Input, Textarea, Button, Space, Grid, Col, Group } from '@mantine/core'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import UserSelectList from '@/components/users/SelectList'
 import IssueStatusSelectList from '@/components/issueStatuses/SelectList'
@@ -83,8 +83,10 @@ const IssueForm: React.VFC<Props> = ({
             </Grid>
             <Space />
             { children }
-            <Button type="submit" loading={isButtonLoading}>保存</Button>
-            <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
+            <Group spacing="xs">
+                <Button type="submit" loading={isButtonLoading}>保存</Button>
+                <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
+            </Group>
         </form>
     )
 }

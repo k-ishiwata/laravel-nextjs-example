@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { useIssue } from '@/hooks/issue'
 import { useIssueStatusList } from '@/hooks/issueStatus'
-import { Button, Space, Table, LoadingOverlay } from '@mantine/core'
+import { Button, Space, Table, LoadingOverlay, Group } from '@mantine/core'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { getUrlParam } from '@/libs/libs'
@@ -56,13 +56,15 @@ const IssueDetailPage: NextPage = () => {
                 </Table>
             </article>
             <Space />
-            <Link href={{
-                pathname: '/issues/edit/',
-                query: { id: issue.id },
-            }}>
-                <Button variant="outline" component="a">編集</Button>
-            </Link>
-            <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
+            <Group spacing="xs">
+                <Link href={{
+                    pathname: '/issues/edit/',
+                    query: { id: issue.id },
+                }}>
+                    <Button variant="outline" component="a">編集</Button>
+                </Link>
+                <Button variant="light" color="gray" onClick={() => router.back()}>戻る</Button>
+            </Group>
             </>
         )
     }

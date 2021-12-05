@@ -5,6 +5,7 @@ use App\Http\Controllers\IssueController;
 use App\Http\Controllers\IssueStatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\Auth\RegisteredController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\AuthenticatedController;
 */
 Route::post('login', [AuthenticatedController::class, 'login']);
 Route::post('logout', [AuthenticatedController::class, 'logout']);
+Route::post('register', RegisteredController::class);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('users/list', [UserController::class, 'list']);
