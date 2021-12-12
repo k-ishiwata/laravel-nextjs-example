@@ -3,9 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /**
+     * ログイン中のユーザー情報を取得
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        $user = Auth::user();
+
+        return $user
+            ? response()->json([
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ], 201)
+            : response()->json([], 500);
+    }
+
     /**
      * セレクトボックスなどに使う最小リスト
      *

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,7 +24,6 @@ class RegistrationTest extends TestCase
 
         // 認証済み
         $this->assertAuthenticated();
-
-        $response->assertStatus(204);
+        $response->assertStatus(201);
     }
 }

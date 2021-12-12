@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisteredController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return \File::get(public_path('index.html'));
+});
+
+Route::group(['prefix' => 'api'], function() {
+    Route::post('login', LoginController::class);
+    Route::post('logout', LogoutController::class);
+    Route::post('register', RegisteredController::class);
 });

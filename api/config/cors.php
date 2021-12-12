@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [config('app.frontend_url')],
+    'allowed_origins' => [env('FRONTEND_URL')],
 
     'allowed_origins_patterns' => [],
 
@@ -29,7 +29,6 @@ return [
 
     'max_age' => 0,
 
-    // 'supports_credentials' => false,
     'supports_credentials' => true,
 
 ];

@@ -7,9 +7,9 @@ import { User } from '@/types/User'
 export const useAuth = () => {
     const router = useRouter()
 
-    const { data: user, error } = useSWR('/api/user', async () =>
+    const { data: user, error } = useSWR('/api/me', async () =>
         await axios
-            .get<User>('/api/user')
+            .get<User>('/api/me')
             .then(res => res.data)
             .catch(error => {
                 throw error.response
