@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { Container, LoadingOverlay, Anchor, Header, Space, Menu } from '@mantine/core'
+import { Container, LoadingOverlay, Anchor, Header, Space, Menu, Group } from '@mantine/core'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from "next/router"
 import Link from 'next/link'
-import { GearIcon, ExitIcon } from '@radix-ui/react-icons'
+import { GearIcon, ExitIcon, CaretDownIcon } from '@radix-ui/react-icons'
 
 type Props = {
     children?: React.ReactNode
@@ -40,7 +40,12 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
                     <Space />
                     <Link href="/issue-statuses/"><Anchor size="sm">ステータス</Anchor></Link>
                     <div style={{ marginLeft: 'auto' }}>
-                        <Menu control={<Anchor variant="text">{ user.name }</Anchor>} gutter={12} zIndex={1000}>
+                        <Menu control={
+                            <Group spacing="xs">
+                                <CaretDownIcon />
+                                <Anchor variant="text">{ user.name }</Anchor>
+                            </Group>
+                        } gutter={12} zIndex={1000}>
                             <Menu.Item icon={<GearIcon />}>設定</Menu.Item>
                             <Menu.Item icon={<ExitIcon />} onClick={logout}>ログアウト</Menu.Item>
                         </Menu>
