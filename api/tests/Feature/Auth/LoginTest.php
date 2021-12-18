@@ -46,7 +46,38 @@ class LoginTest extends TestCase
         ];
 
         $this->postJson('/api/login', $data)
-            ->assertStatus(401)
-            ->assertJson(['message' => 'ログインに失敗しました。']);
+            ->assertStatus(422)
+            ->assertJson([
+                'errors' => [
+                    'email' => [
+                        '認証に失敗しました。'
+                    ]
+                ]
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function ログインに指定回数失敗するとロックされる()
+    {
+        $data = [
+            'email' => $this->user->email,
+            'password' => 'aaaaaaaa',
+        ];
+
+        foreach (range(1, 5) as $item) {
+            $this->postJson('/api/login', $data)->assertStatus(422);
+        }
+
+        $this->postJson('/api/login', $data)
+            ->assertStatus(422)
+            ->assertJson([
+                'errors' => [
+                    'email' => [
+                        'ログインの試行回数が多すぎます。60 秒後にお試しください。'
+                    ]
+                ]
+            ]);
     }
 }
