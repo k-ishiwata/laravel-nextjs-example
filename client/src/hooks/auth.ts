@@ -34,8 +34,8 @@ export const useAuth = () => {
             .then(() => {
                 window.location.href = String(redirect)
             })
-            .catch(() => {
-                toast.error('ログインに失敗しました')
+            .catch((error) => {
+                validateErrorNotice(error)
             })
     }
 
