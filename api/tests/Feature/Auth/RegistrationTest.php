@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection NonAsciiCharacters */
 
 namespace Tests\Feature\Auth;
 

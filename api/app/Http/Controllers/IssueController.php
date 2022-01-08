@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use App\Http\Requests\IssueRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class IssueController extends Controller
 {
@@ -21,7 +22,7 @@ class IssueController extends Controller
 
         return $issues
             ? response()->json($issues)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -32,8 +33,8 @@ class IssueController extends Controller
     {
         $issue = Issue::create($request->all());
         return $issue
-            ? response()->json($issue, 201)
-            : response()->json([], 500);
+            ? response()->json($issue, Response::HTTP_CREATED)
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -57,7 +58,7 @@ class IssueController extends Controller
     {
         return $issue->update($request->all())
             ? response()->json($issue)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -68,6 +69,6 @@ class IssueController extends Controller
     {
         return $issue->delete()
             ? response()->json($issue)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

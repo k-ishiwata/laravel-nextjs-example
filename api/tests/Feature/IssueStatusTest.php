@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection NonAsciiCharacters */
 
 namespace Tests\Feature;
 
@@ -17,6 +17,7 @@ class IssueStatusTest extends TestCase
 
         $this->seed('IssueStatusSeeder');
 
+        /** @var \App\Models\User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
     }

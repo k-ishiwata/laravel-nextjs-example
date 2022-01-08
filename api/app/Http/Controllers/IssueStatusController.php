@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IssueStatus;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class IssueStatusController extends Controller
 {
@@ -16,7 +17,7 @@ class IssueStatusController extends Controller
 
         return $issuesStatus
             ? response()->json($issuesStatus)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -28,8 +29,8 @@ class IssueStatusController extends Controller
         $issueStatus = IssueStatus::create($request->all());
 
         return $issueStatus
-            ? response()->json($issueStatus, 201)
-            : response()->json([], 500);
+            ? response()->json($issueStatus, Response::HTTP_CREATED)
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -50,7 +51,7 @@ class IssueStatusController extends Controller
     {
         return $issueStatus->update($request->all())
             ? response()->json($issueStatus)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -61,7 +62,7 @@ class IssueStatusController extends Controller
     {
         return $issueStatus->delete()
             ? response()->json($issueStatus)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -73,6 +74,6 @@ class IssueStatusController extends Controller
 
         return $issuesStatus
             ? response()->json($issuesStatus)
-            : response()->json([], 500);
+            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

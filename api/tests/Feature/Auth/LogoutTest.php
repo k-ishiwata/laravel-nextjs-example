@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection NonAsciiCharacters */
 
 namespace Tests\Feature\Auth;
 
@@ -10,6 +10,7 @@ class LogoutTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @var \App\Models\User $user */
     private $user;
 
     public function setUp(): void

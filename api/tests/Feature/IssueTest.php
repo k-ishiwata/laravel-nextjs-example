@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection NonAsciiCharacters */
 
 namespace Tests\Feature;
 
@@ -15,6 +15,7 @@ class IssueTest extends TestCase
     {
         parent::setUp();
 
+        /** @var \App\Models\User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
     }
@@ -29,6 +30,31 @@ class IssueTest extends TestCase
         $response
             ->assertOk()
             ->assertJsonCount($issues->count(), 'data');
+    }
+
+    /**
+     * @test
+     */
+    public function ひとつだけ取得できる()
+    {
+        $issues = Issue::factory()->count(10)->create();
+        $response = $this->getJson('api/issues/1');
+        $response
+            ->assertOk()
+            ->assertJson($issues[0]->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function レコードがない場合404エラー()
+    {
+        $response = $this->getJson('api/issues/1');
+        $response
+            ->assertStatus(404)
+            ->assertJson([
+                'message' => 'そのリクエストはありません。'
+            ]);
     }
 
     /**
