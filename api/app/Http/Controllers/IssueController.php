@@ -13,16 +13,14 @@ class IssueController extends Controller
      */
     public function index()
     {
-        $issues = Issue::with(['user' => function ($q) {
-                $q->select('id', 'name');
-            }])
+        $issues = Issue::with([
+                'user' => fn($q) => $q->select('id', 'name')
+            ])
             ->select('id','title','status_id','user_id','created_at','updated_at')
             ->orderByDesc('id')
             ->paginate(10);
 
-        return $issues
-            ? response()->json($issues)
-            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json($issues);
     }
 
     /**
@@ -32,9 +30,7 @@ class IssueController extends Controller
     public function store(IssueRequest $request)
     {
         $issue = Issue::create($request->all());
-        return $issue
-            ? response()->json($issue, Response::HTTP_CREATED)
-            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json($issue, Response::HTTP_CREATED);
     }
 
     /**
@@ -43,9 +39,9 @@ class IssueController extends Controller
      */
     public function show(Issue $issue)
     {
-        $issue->load(['user' => function ($q) {
-            $q->select('id', 'name');
-        }]);
+        $issue->load([
+            'user' => fn($q) => $q->select('id', 'name')
+        ]);
         return response()->json($issue);
     }
 

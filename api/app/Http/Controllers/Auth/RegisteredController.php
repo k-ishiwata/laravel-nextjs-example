@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisteredController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke(Request $request)
     {
         $request->validate([
@@ -27,8 +31,6 @@ class RegisteredController extends Controller
 
         event(new Registered($user));
 
-        return $user
-            ? response()->json($user, 201)
-            : response()->json([], 500);
+        return response()->json($user, 201);
     }
 }

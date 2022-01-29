@@ -14,10 +14,7 @@ class IssueStatusController extends Controller
     public function index()
     {
         $issuesStatus = IssueStatus::all();
-
-        return $issuesStatus
-            ? response()->json($issuesStatus)
-            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json($issuesStatus);
     }
 
     /**
@@ -27,10 +24,7 @@ class IssueStatusController extends Controller
     public function store(Request $request)
     {
         $issueStatus = IssueStatus::create($request->all());
-
-        return $issueStatus
-            ? response()->json($issueStatus, Response::HTTP_CREATED)
-            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json($issueStatus, Response::HTTP_CREATED);
     }
 
     /**
@@ -71,9 +65,6 @@ class IssueStatusController extends Controller
     public function list()
     {
         $issuesStatus = IssueStatus::select('id', 'label', 'color')->get()->keyBy('id');
-
-        return $issuesStatus
-            ? response()->json($issuesStatus)
-            : response()->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json($issuesStatus);
     }
 }

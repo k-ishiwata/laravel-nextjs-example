@@ -18,7 +18,7 @@ class IssuePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class IssuePolicy
      */
     public function view(User $user, Issue $issue)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class IssuePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class IssuePolicy
      */
     public function update(User $user, Issue $issue)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class IssuePolicy
      */
     public function delete(User $user, Issue $issue)
     {
-        //
+        return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class IssuePolicy
      */
     public function restore(User $user, Issue $issue)
     {
-        //
+        return true;
     }
 
     /**
@@ -89,6 +89,6 @@ class IssuePolicy
      */
     public function forceDelete(User $user, Issue $issue)
     {
-        //
+        return true;
     }
 }

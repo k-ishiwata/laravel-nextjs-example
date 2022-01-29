@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke(Request $request)
     {
         Auth::logout();

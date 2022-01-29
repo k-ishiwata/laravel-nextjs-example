@@ -18,7 +18,7 @@ class IssueStatusPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class IssueStatusPolicy
      */
     public function view(User $user, IssueStatus $issueStatus)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class IssueStatusPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class IssueStatusPolicy
      */
     public function update(User $user, IssueStatus $issueStatus)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class IssueStatusPolicy
      */
     public function delete(User $user, IssueStatus $issueStatus)
     {
-        //
+        return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class IssueStatusPolicy
      */
     public function restore(User $user, IssueStatus $issueStatus)
     {
-        //
+        return true;
     }
 
     /**
@@ -89,6 +89,6 @@ class IssueStatusPolicy
      */
     public function forceDelete(User $user, IssueStatus $issueStatus)
     {
-        //
+        return true;
     }
 }
