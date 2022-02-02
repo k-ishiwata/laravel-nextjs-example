@@ -12,7 +12,7 @@ const IssuePage: NextPage = () => {
                     <Button>新規登録</Button>
                 </Link>
             </div>
-            <Space />
+            <Space h="md" />
             <IssueList />
         </Layout>
     )

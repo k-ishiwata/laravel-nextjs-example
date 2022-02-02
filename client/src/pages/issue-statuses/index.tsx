@@ -62,7 +62,7 @@ const IssueStatusPage: NextPage = () => {
             <div style={{ textAlign: 'right', marginTop: -50 }}>
                 <Button onClick={() => handleOpenModal()}>新規登録</Button>
             </div>
-            <Space />
+            <Space h="md" />
             <Content />
         </Layout>
     )

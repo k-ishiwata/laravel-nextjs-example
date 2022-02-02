@@ -22,7 +22,7 @@ const IssueDetailPage: NextPage = () => {
         return (
             <>
             <article>
-                <Table>
+                <Table verticalSpacing="xs">
                     <tbody>
                     <tr>
                         <td width={100}>ID</td>
@@ -55,7 +55,7 @@ const IssueDetailPage: NextPage = () => {
                     </tbody>
                 </Table>
             </article>
-            <Space />
+            <Space h="sm" />
             <Group spacing="xs">
                 <Link href={{
                     pathname: '/issues/edit/',

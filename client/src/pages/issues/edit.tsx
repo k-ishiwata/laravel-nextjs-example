@@ -21,7 +21,7 @@ const IssueEditPage: NextPage = () => {
         return (
             <>
                 <p>ID: {issue.id}</p>
-                <Space />
+                <Space h="md" />
                 <div style={{textAlign: "right", marginTop: -50}}>
                     <Button color="red" onClick={() => deleteModal(issue)}>削除</Button>
                 </div>
@@ -38,7 +38,7 @@ const IssueEditPage: NextPage = () => {
                         </tr>
                         </tbody>
                     </Table>
-                    <Space />
+                    <Space h="md" />
                 </IssueForm>
             </>
         )

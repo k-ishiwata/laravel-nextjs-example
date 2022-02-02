@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Issue, IssueCreate } from '@/types/Issue'
 import { InputWrapper, Input, Textarea, Button, Space, Grid, Col, Group } from '@mantine/core'
@@ -14,12 +14,19 @@ type Props = {
 
 const IssueForm: React.VFC<Props> = ({
     issue,
-    submitAction,
-    children
+    children,
+    submitAction
 }) => {
     const router = useRouter()
     const { register, handleSubmit, formState: { errors }, control } = useForm<Issue>()
     const [ isButtonLoading, setIsButtonLoading ] = useState(false)
+
+    useEffect(() => {
+        return () => {
+            // Unmount時ボタンアニメーションを止める
+            setIsButtonLoading(false)
+        }
+    }, [])
 
     const onSubmit: SubmitHandler<Issue> = data => {
         setIsButtonLoading(true)
@@ -41,16 +48,16 @@ const IssueForm: React.VFC<Props> = ({
                 <Input
                     defaultValue={issue.title}
                     {...register('title', {
-                        required: "必ず入力してください。",
+                        required: '必ず入力してください。',
                         maxLength: {
                             value: 255,
-                            message: "255文字以内で入力してください。"
+                            message: '255文字以内で入力してください。'
                         }
                     })}
                     invalid={errors.title !== undefined}
                 />
             </InputWrapper>
-            <Space />
+            <Space h="sm"  />
             <Textarea
                 label="内容"
                 required
@@ -59,12 +66,12 @@ const IssueForm: React.VFC<Props> = ({
                 {...register('body', {
                     maxLength: {
                         value: 1000,
-                        message: "1000文字以内で入力してください。"
+                        message: '1000文字以内で入力してください。'
                     }
                 })}
                 error={errors.body?.message}
             />
-            <Space />
+            <Space h="sm"  />
             <Grid>
                 <Col span={6}>
                     <IssueStatusSelectList
@@ -81,7 +88,7 @@ const IssueForm: React.VFC<Props> = ({
                     />
                 </Col>
             </Grid>
-            <Space />
+            <Space h="sm"  />
             { children }
             <Group spacing="xs">
                 <Button type="submit" loading={isButtonLoading}>保存</Button>

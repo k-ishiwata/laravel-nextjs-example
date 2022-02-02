@@ -35,9 +35,9 @@ export default function Layout ({ children, title, isGuest = false }: Props) {
             <Header height={50} padding="md" fixed>
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <Link href="/"><Anchor size="sm">ダッシュボード</Anchor></Link>
-                    <Space />
+                    <Space w="md" />
                     <Link href="/issues/"><Anchor size="sm">課題一覧</Anchor></Link>
-                    <Space />
+                    <Space w="md" />
                     <Link href="/issue-statuses/"><Anchor size="sm">ステータス</Anchor></Link>
                     <div style={{ marginLeft: 'auto' }}>
                         <Menu control={

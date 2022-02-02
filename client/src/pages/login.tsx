@@ -6,15 +6,17 @@ import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 import Link from 'next/link'
 
+type LoginSubmit = {
+    email: string,
+    password: string
+}
+
 const LoginPage: NextPage = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginSubmit>()
     const { login } = useAuth()
     const [ isButtonLoading, setIsButtonLoading ] = useState(false)
 
-    const onSubmit: SubmitHandler<{
-        email: string,
-        password: string
-    }> = data => {
+    const onSubmit: SubmitHandler<LoginSubmit> = data => {
         setIsButtonLoading(true)
         login(data)
         window.setTimeout(() => {
@@ -44,7 +46,7 @@ const LoginPage: NextPage = () => {
                         defaultValue="admin@example.com"
                     />
                 </InputWrapper>
-                <Space />
+                <Space h="md" />
                 <PasswordInput
                     {...register('password', {
                         required: '必ず入力してください。'
@@ -54,7 +56,7 @@ const LoginPage: NextPage = () => {
                     required
                     defaultValue="123456789"
                 />
-                <Space />
+                <Space h="xl" />
                 <Group>
                     <Button type="submit" loading={isButtonLoading}>ログイン</Button>
                     <Link href="/register"><Anchor size="sm">新規ユーザー登録</Anchor></Link>

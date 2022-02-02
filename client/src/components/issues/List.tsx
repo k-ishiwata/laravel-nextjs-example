@@ -86,7 +86,7 @@ const IssueList = () => {
                 }
                 </tbody>
             </Table>
-            <Space />
+            <Space h="md" />
             <div>
                 <Pagination
                     page={pageIndex}

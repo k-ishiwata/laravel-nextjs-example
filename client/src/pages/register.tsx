@@ -5,17 +5,19 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useAuth } from '@/hooks/auth'
 import Head from 'next/head'
 
+type RegisterSubmit = {
+    name: string,
+    email: string,
+    password: string,
+    password_confirmation: string
+}
+
 const RegisterPage: NextPage = () => {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<RegisterSubmit>()
     const [ isButtonLoading, setIsButtonLoading ] = useState(false)
     const { register: userRegister } = useAuth()
 
-    const onSubmit: SubmitHandler<{
-        name: string,
-        email: string,
-        password: string,
-        password_confirmation: string
-    }> = data => {
+    const onSubmit: SubmitHandler<RegisterSubmit> = data => {
         setIsButtonLoading(true)
         userRegister(data)
         window.setTimeout(() => {
@@ -44,7 +46,7 @@ const RegisterPage: NextPage = () => {
                         invalid={errors.name !== undefined}
                     />
                 </InputWrapper>
-                <Space />
+                <Space h="md" />
                 <InputWrapper
                     required
                     label="メールアドレス"
@@ -61,7 +63,7 @@ const RegisterPage: NextPage = () => {
                         invalid={errors.email !== undefined}
                     />
                 </InputWrapper>
-                <Space />
+                <Space h="md" />
                 <PasswordInput
                     {...register('password', {
                         required: '必ず入力してください。',
@@ -74,7 +76,7 @@ const RegisterPage: NextPage = () => {
                     error={errors.password?.message}
                     required
                 />
-                <Space />
+                <Space h="md" />
                 <PasswordInput
                     {...register('password_confirmation', {
                         required: '必ず入力してください。',
@@ -87,7 +89,7 @@ const RegisterPage: NextPage = () => {
                     error={errors.password_confirmation?.message}
                     required
                 />
-                <Space />
+                <Space h="xl" />
                 <Group spacing="xs">
                     <Button type="submit" loading={isButtonLoading}>新規登録</Button>
                     <Button component="a" variant="light" color="gray" href="/login">キャンセル</Button>

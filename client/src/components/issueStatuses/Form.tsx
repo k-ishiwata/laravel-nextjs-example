@@ -51,16 +51,16 @@ const IssueStatusForm: React.VFC<Props> = ({
                 <Input
                     defaultValue={issueStatus.label}
                     {...register('label', {
-                        required: "必ず入力してください。",
+                        required: '必ず入力してください。',
                         maxLength: {
                             value: 10,
-                            message: "10文字以内で入力してください。"
+                            message: '10文字以内で入力してください。'
                         }
                     })}
                     invalid={errors.label !== undefined}
                 />
             </InputWrapper>
-            <Space />
+            <Space h="sm" />
             <InputWrapper
                 id="input-color"
                 required
@@ -71,7 +71,7 @@ const IssueStatusForm: React.VFC<Props> = ({
                 {swatches}
                 </Group>
             </InputWrapper>
-            <Space />
+            <Space h="sm" />
             <Group spacing="xs">
                 <Button type="submit">保存</Button>
                 <Button variant="light" color="gray" onClick={handleClose}>閉じる</Button>
